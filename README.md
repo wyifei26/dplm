@@ -68,6 +68,7 @@ We develop DPLM based on the [ByProt](https://github.com/BytedProtein/ByProt). T
   - [Structure-conditioned generation: inverse folding](#structure-conditioned-generation-inverse-folding)
   - [Motif scaffolding](#motif-scaffolding)
   - [Representation Learning](#representation-learning)
+- [Architecture Documentation](#architecture-documentation)
 - [Acknowledgements](#acknowledgements)
 - [Citation](#citation)
 
@@ -601,6 +602,15 @@ The DPLM family excels in various downstream protein predictive tasks. DPLM is a
 > We find DPLM-2 demonstrates a performance degradation on some tasks (e.g., HumanPPI and DeepLoc-Subcellular), due to continue training on smaller magnitude of structure data and result in overfitting and degradation of the representations learned during large-scale sequence pretraining. \* means training on the larger-scale [AFDB representative](https://www.nature.com/articles/s41586-023-06510-w) structure data, and we find that enlarging structure data is indeed a key factor for better multimodal protein representations. Please refer to DPLM-2 paper for more details about this.
 
 The training and evaluation pipeline is based on the [SaProt](https://github.com/westlake-repl/SaProt/tree/main) repository, and we slightly modify the code to support DPLM. Users can select the "representationlearning" branch for the evaluation of protein predictive tasks.
+
+# Architecture Documentation
+
+For a detailed technical explanation of the DPLM-2 architecture — including the LFQ (Lookup-Free Quantization) principle for structure tokenization and how structure tokens and sequence tokens are concatenated for diffusion generation — please refer to **[ARCHITECTURE.md](./ARCHITECTURE.md)**.
+
+Key topics covered:
+- **Overall architecture design**: unified token vocabulary, multimodal training strategy, and the ESM-based transformer backbone.
+- **LFQ for structure tokenization**: how the StructOK tokenizer converts 3D coordinates into discrete integer tokens using sign-based binary quantization, straight-through gradients, and entropy-based codebook utilization losses.
+- **Token concatenation strategy**: how the structure-token half and sequence-token half are concatenated along the sequence dimension before a single joint forward pass, with bimodal rotary position embeddings keeping the two modalities position-aligned.
 
 # Acknowledgements
 
